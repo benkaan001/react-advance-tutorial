@@ -1,6 +1,14 @@
 import React from 'react';
 // react router
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+// ---> exact is optional anything beyond teh home page route - unless you have nested pages
+
+// ---> use Switch component otherwise the error page (*) will automatically display with every and any page
+// with Switch, only the first page that matches the path gets displayed
+
+// ---> Make sure Navbar is not inside the Switch!
+
 // pages
 import Home from './Home';
 import About from './About';
@@ -10,7 +18,26 @@ import Person from './Person';
 // navbar
 import Navbar from './Navbar';
 const ReactRouterSetup = () => {
-  return <h2>react router</h2>;
+  return (
+    <Router>
+      <Navbar />
+      <Switch>
+        <Route exact path='/'>
+          <Home />
+        </Route>
+        <Route exact path='/about'>
+          <About />
+        </Route>
+        <Route exact path='/people'>
+          <People />
+        </Route>
+        <Route path='/project/:id' children={<Person />}></Route>
+        <Route path='*'>
+          <Error />
+        </Route>
+      </Switch>
+    </Router>
+  );
 };
 
 export default ReactRouterSetup;
